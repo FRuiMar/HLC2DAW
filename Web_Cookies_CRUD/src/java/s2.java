@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,8 +15,8 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author diurno
  */
-@WebServlet(urlPatterns = {"/s1"})
-public class s1 extends HttpServlet {
+@WebServlet(urlPatterns = {"/s2"})
+public class s2 extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,61 +35,10 @@ public class s1 extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet s1</title>");
+            out.println("<title>Servlet s2</title>");
             out.println("</head>");
             out.println("<body>");
-            
-            Cookie[] cookies =request.getCookies(); //creo un array de cookies, solicitando las cookies que haya... 
-            
-            String cName = request.getParameter("nomCookie");
-            String cValue = request.getParameter("valor");
-            
-            String option = request.getParameter("button");
-            
-            switch (option) {
-                case "Crear":
-                    Cookie c = new Cookie(cName, cValue);  //creo la cookie, pero hay que meterla.(siempre que se pueda)
-                    response.addCookie(c); //con esto metemos/añadimos la cookie. 
-                    request.getRequestDispatcher("index.jsp").forward(request, response);
-                    break;
-                    
-                case "Visualizar":
-                    for (int i = 0; i < cookies.length; i++) {
-                        out.println(cookies[i].getName() + " - " + cookies[i].getValue());
-                        out.print("<br>");
-                    }
-                    out.print("<a href='index.jsp'>volver</a>");
-                    break;
-                    
-                case "Modificar":
-                    for (int i = 0; i < cookies.length; i++) {
-                        if((cookies[i].getName()).equals(cName)){
-                            cookies[i].setValue(cValue);
-                            response.addCookie(cookies[i]);
-                        }
-                    }
-                    break;
-                    
-                case "Eliminar":
-                    cookies = request.getCookies();
-                    for(int i = 0; i < cookies.length; i++) {
-                         if((cookies[i].getName()).equals(cName)){
-                            cookies[i].setMaxAge(0);
-                            response.addCookie(cookies[i]);
-                        }
-                    }    
-                    request.getRequestDispatcher("index.jsp").forward(request, response);
-                    break;
-                    
-                    
-                    
-                default:
-                    throw new AssertionError();
-            }
-            
-            
-            
-            //out.println("<h1>Servlet s1 at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet s2 at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }

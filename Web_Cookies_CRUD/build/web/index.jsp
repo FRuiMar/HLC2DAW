@@ -19,8 +19,7 @@
             <input type="submit" name="button" value="Crear">
             <input type="submit" name="button" value="Visualizar">
             <input type="submit" name="button" value="Modificar">
-            <input type="submit" name="buttona" value="Eliminar">
-            
+            <input type="submit" name="button" value="Eliminar">
         </form>
     </body>
 </html>
