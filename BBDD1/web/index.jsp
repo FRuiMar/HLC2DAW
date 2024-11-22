@@ -12,6 +12,10 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <% 
+        ResultSet rs= new p1.Ejecuta("select + from alumno".getResult)
+            
+        
+        %>
     </body>
 </html>
