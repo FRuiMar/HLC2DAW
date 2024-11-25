@@ -45,7 +45,7 @@ public class s1 extends HttpServlet {
                 if (request.getParameter("borrar") != null) {
                     String id = request.getParameter("id");
                     out.println(id);
-                    ResultSet rs = new p1.Ejecuta("select * from alumno where id=" + id).getResult();
+                    ResultSet rs = new p1.Ejecuta("select * from persona where id=" + id).getResult();
                     rs.absolute(1);
                     rs.deleteRow();
                     request.getRequestDispatcher("index.jsp").forward(request, response);
@@ -53,8 +53,8 @@ public class s1 extends HttpServlet {
                 if (request.getParameter("insert") != null) {
 
                     try {
-                        ResultSet rs = new p1.Ejecuta("select * from alumno").getResult();
-                        ResultSet rs2 = new p1.Ejecuta("select * from alumno order by id desc limit 1").getResult();
+                        ResultSet rs = new p1.Ejecuta("select * from persona").getResult();
+                        ResultSet rs2 = new p1.Ejecuta("select * from persona order by id desc limit 1").getResult();
                         if (rs2.next()) {
                             out.println(rs2.getInt(1));
                         }
@@ -80,7 +80,7 @@ public class s1 extends HttpServlet {
                 if (request.getParameter("editar") != null) {
                     try {
                         String id = request.getParameter("id");
-                        ResultSet rs = new p1.Ejecuta("select * from alumno where id=" + id).getResult();
+                        ResultSet rs = new p1.Ejecuta("select * from persona where id=" + id).getResult();
                         rs.absolute(1);
                         rs.updateString(2, request.getParameter("nombre"));
                         rs.updateInt(3, Integer.parseInt(request.getParameter("nota")));

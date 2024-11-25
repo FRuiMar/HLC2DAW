@@ -28,7 +28,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
     <body>
 
         <%
-            ResultSet rs = new p1.Ejecuta("select * from alumno").getResult();
+            ResultSet rs = new p1.Ejecuta("select * from persona").getResult();
 
             out.println("<table>");
             out.println("<tr><th>ID</th> <th>NOMBRE</th><th>NOTA</th><th>FECHA_NACIMIENTO</th><th>ACCIONES</th></tr>");
