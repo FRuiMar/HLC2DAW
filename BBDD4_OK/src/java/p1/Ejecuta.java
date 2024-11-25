@@ -12,12 +12,12 @@ public class Ejecuta {
 
     public Ejecuta(String sentenciasql) {
 //Cadena de conexion de MySql, el parametro useSSL es opcional
-        String url = "jdbc:mysql://localhost:3306/1?autoReconnect=true&useSSL=false";
+        String url = "jdbc:mysql://localhost:3306/hlc_crud?autoReconnect=true&useSSL=false";
 // Cargamos el driver de mysql
         try {
             Class.forName("com.mysql.jdbc.Driver");
 // Creamos el objeto conexion
-            this.conexion = (Connection) DriverManager.getConnection(url, "alex", "1234");
+            this.conexion = (Connection) DriverManager.getConnection(url, "dwes", "abc123.");
 // Creamos un objeto Statement
             this.instruccion = conexion.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
