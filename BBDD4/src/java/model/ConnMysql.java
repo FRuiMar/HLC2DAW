@@ -4,16 +4,14 @@
  */
 package model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+/**
+ *
+ * @author YO
+ */
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author diurno
- */
 public class ConnMysql {
 
     // Propiedades
@@ -26,10 +24,10 @@ public class ConnMysql {
     // Constructor
     public ConnMysql() {
 
-        String url = "jdbc:mysql://localhost:3306/hlc_crud?autoReconnect=true&useSSL=false";
+        String url = "jdbc:mysql://localhost:3306/1?autoReconnect=true&useSSL=false";
         String driver = "com.mysql.jdbc.Driver";
-        String usuario = "dwes";
-        String password = "abc123.";
+        String usuario = "alex";
+        String password = "1234";
 
         try {
             Class.forName(driver);

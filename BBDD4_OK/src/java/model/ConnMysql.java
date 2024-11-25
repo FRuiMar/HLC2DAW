@@ -4,16 +4,14 @@
  */
 package model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+/**
+ *
+ * @author YO
+ */
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author diurno
- */
 public class ConnMysql {
 
     // Propiedades
