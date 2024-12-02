@@ -15,13 +15,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import jakarta.servlet.http.HttpSession;
 import model.ConnMysql;
 import java.sql.*;
 
 /**
  *
- * @author FMHJ97
+ * @author Fran Ruiz
  */
 @WebServlet(name = "s1", urlPatterns = {"/s1"})
 public class s1 extends HttpServlet {
