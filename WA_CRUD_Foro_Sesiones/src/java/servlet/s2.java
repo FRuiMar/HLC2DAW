@@ -43,15 +43,17 @@ public class s2 extends HttpServlet {
             Object[] registro = (Object[]) my_session.getAttribute("login");
             String autor = (String) registro[0];
 
+            //si pulso salir.
             if (request.getParameter("logout") != null) {
                 my_session.removeAttribute("login");
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
             
+            //si pulso cancelar, vuelvo al foro.
             if (request.getParameter("cancel") != null) {
                 request.getRequestDispatcher("foro.jsp").forward(request, response);
             }
-
+            
             if (request.getParameter("borrar") != null) {
                 // Obtenemos el id del registro seleccionado.
                 int id_registro = Integer.parseInt(request.getParameter("borrar"));
@@ -63,16 +65,19 @@ public class s2 extends HttpServlet {
                     Statement instruccion = conn.createStatement(
                             ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
                     
+                    //selecciono el mensaje con id determinado, y sale solo uno, por eso uso absolute(1) que es la primeral inea.
                     String sql = "SELECT * FROM mensaje WHERE id = " + id_registro;
                     ResultSet rs = instruccion.executeQuery(sql);
                     
-                    rs.absolute(1);
+                    rs.absolute(1); //la selecciono y la borro abajo.
                     rs.deleteRow();
                     
+                    //cierro.
                     rs.close();
                     instruccion.close();
                     conn.close();
                     
+                    //
                     my_session.removeAttribute("msg2");
                     request.getRequestDispatcher("foro.jsp").forward(request, response);
                 } catch (SQLException e) {

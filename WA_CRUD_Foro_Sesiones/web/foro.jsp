@@ -8,13 +8,13 @@
 <%@page import="java.sql.*"%>
 <%@page import="clases.ConnMysql"%>
 
-<%
+<%//verifico  si hay ya una sesión con el atributo login., si no existe, te redirige al index (login).
     if (session.getAttribute("login") == null) {
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
     // Saco el valor del atributo Login de la sesión.
-    Object[] login = (Object[]) session.getAttribute("login");
+    Object[] login = (Object[]) session.getAttribute("login");  //meto toda la info de la sesión en el objeto login.
     String autor = (String) login[0];
     int esAdmin = (int) login[1];
 
@@ -131,25 +131,7 @@
                 </div>
             </div>
         </div>
-        <script>
-            document.addEventListener("click", (e) => {
-                if (e.target.matches("#editar")) {
-                    // Variables.
-                    let id = parseInt(e.target.value); // ID del mensaje
-                    let mensaje = e.target.dataset.msg; // Mensaje del atributo data-mensaje
-                    let $botonEditar = document.getElementById("update"); // Botón de edición del Panel Editar Mensaje
-                    let $divInsert = document.getElementById("insert-msg"); // Panel de inserción del Panel Nuevo Mensaje
-                    let $divEditar = document.getElementById("update-msg"); // Panel de edición del Panel Editar Mensaje
-                    let $txtAreaEditar = document.querySelector("#update-msg textarea"); // Textarea de edición del Panel Editar Mensaje
-
-                    // Operaciones.
-                    $botonEditar.value = id; // Asigna el ID al botón "Editar"
-                    $txtAreaEditar.value = mensaje; // Coloca el contenido en el textarea
-                    $divInsert.classList.add("hidden");
-                    $divEditar.classList.remove("hidden");
-                }
-            });
-        </script>
+        
 
     </body>
 </html>

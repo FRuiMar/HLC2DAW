@@ -1,0 +1,120 @@
+INDEX/PAGE 1 
+
+<%@page import="java.sql.ResultSet"%>
+<%@page import="p1.Ejecuta"%>
+
+ResultSet rs = new p1.Ejecuta("select * from equipo order by puntos desc").getResult();
+
+<form action="Servlet1Exam" method="POST">
+    <span>
+        <input name="pwd" type="password" placeholder="Password">
+        <input type="submit" class="btn btn-primary mx-2" name="login" value="Administrador">
+    </span>
+</form>
+
+
+
+SERVELET FUNCTIONS
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+
+!--<!-- This gets things from the previous page like $_POST -->
+String pwd = request.getParameter("pwd");
+!--<!-- FOR LOOPING DB RESULTS -->
+while (rs.next()) {
+
+!<!-- FOR INSERTION/MODIFICATION/ETC -->
+rs.moveToInsertRow();
+rs.updateInt(2, rs2.getInt(1));
+rs.updateInt(3, rs3.getInt(1));
+rs.updateInt(4, Integer.parseInt(request.getParameter("goalsE1")));
+rs.updateInt(5, Integer.parseInt(request.getParameter("goalsE2")));
+rs.insertRow();
+
+rs.absolute(1);          <!<!--  CHOOSE THE EXACT ROW/RESULT  -->  
+rs.deleteRow();      
+
+request.getRequestDispatcher("index.jsp").forward(request, response);   !-<!-- REDIRECT -->
+
+!--<!-- DATE -->
+
+String fechaString = request.getParameter("fecha");
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+java.util.Date parsedDate = sdf.parse(fechaString);  // Parse the string into a Date object
+java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
+rs.updateDate(4, sqlDate);
+
+Cookie[] cookies = request.getCookies(); !-<!-- GET COOKIES -->
+
+Cookie c = new Cookie(NAME, VALUE);
+response.addCookie(c); <!<!-- THIS UPDATES THE COOKIE TO MAKE THE CHANGE -->
+cookies[i].setValue(cValor); !-<!-- CHANGE VALUE -->
+cookies[i].setMaxAge(0); <!<!-- DELETE COOKIE -->
+
+String[] intereses;
+intereses = request.getParameterValues("chk1");
+><!-- FOR INITIALISING/GETTING CHECKBOX VALUES -->
+
+<!<!-- USER AUTHENTICATION -->
+
+HttpSession misession = request.getSession();
+ArrayList<usuario> listaUsuarios = new listausuarios();
+    usuario usuarioAutenticado = null;
+
+    for (usuario u : listaUsuarios) {
+    if (u.getUser().equals(user) && u.getPassword().equals(password)) {
+    usuarioAutenticado = u;
+    break;
+    }
+    }
+    if (usuarioAutenticado == null) {
+    request.setAttribute("mensaje", "Usuario incorrecto");
+    request.getRequestDispatcher("index.jsp").forward(request, response);
+
+    } else {
+    misession.setAttribute("user", usuarioAutenticado);
+    request.getRequestDispatcher("autenticado.jsp").forward(request, response);
+    }
+
+
+    <!<!-- GET USER IN INDEX OR PAGE -->
+    usuario user1 = (usuario) session.getAttribute("user");
+
+
+
+
+    HttpSession miSesion=request.getSession();
+    if (miSesion.isNew()) {             
+    <!<!-- IF SESSION NEW/NOT NEW -->
+    <%
+    if (session.isNew()){
+    out.println("La primera vez que entras");
+    session.setAttribute("nombre", "pepe");
+    }
+    else { out.println("ya has entrado antes");
+    String cadena = (String)session.getAttribute("nombre");
+    out.println(cadena);
+    }
+    %>
+
+
+
+
+    HttpSession misesion = request.getSession();
+    misesion.invalidate();
+    request.getRequestDispatcher("index.jsp").forward(request, response);
+    } <!<!-- LOG OUT/ END SESSION -->
+
+    COPY THE FUCKING P1 FOLDER INTO THE PROJECT, MAKE SURE ITS WORKING RIGHT
+    ALSO ADD FUCKING MYSQL CONNECTOR OR THE PROJECT WONT FUCKING WORK
+    AND ALSO ADD ConnMysql TO MODEL OR IT WONT FUCKING WORK
+
+    NAME THE SERVLETS UNIQUE NAMES OR THEY WONT FUCKING WORK

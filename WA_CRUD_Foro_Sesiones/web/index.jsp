@@ -8,7 +8,7 @@
 <%@page import="java.sql.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<%
+<%  //si existe una sesion con login, me rediriges al foro.
     if (session.getAttribute("login") != null) {
         request.getRequestDispatcher("foro.jsp").forward(request, response);
     }
