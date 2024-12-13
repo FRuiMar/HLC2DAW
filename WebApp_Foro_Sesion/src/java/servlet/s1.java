@@ -11,13 +11,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import clases.ConnMysql;
 import jakarta.servlet.http.HttpSession;
-import java.sql.*;
+
+import java.sql.*; //importante
 
 /**
  *
- * @author Usuario
+ * @author Fran Ruiz
  */
 @WebServlet(name = "s1", urlPatterns = {"/s1"})
 public class s1 extends HttpServlet {
@@ -37,47 +39,40 @@ public class s1 extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
 
-            //Creo la sesión
+            //creo la sesión
             HttpSession my_session = request.getSession();
 
-            //verifico si existe ya una sesión con atributo Login, y me rediriges ya al foro.
+            //si ya está creada con atributo login me voy al foro.
             if (my_session.getAttribute("login") != null) {
                 request.getRequestDispatcher("foro.jsp").forward(request, response);
             }
 
-            //recibo los datos del input index.jsp
+            //saco los datos de los inputs.
             String user = (String) request.getParameter("user");
             String pwd = (String) request.getParameter("pwd");
 
-            //creo la conexión.
             try {
 
-                Connection conn = new ConnMysql().getConnection();
+                Connection conn = new ConnMysql().getConnection(); 
+                Statement instruccion = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                String sql = "SELECT * from usuario WHERE usuario = '" + user + "' AND pass = '" + pwd + "'";
 
-                Statement instruccion = conn.createStatement( //lo verde es para poder moverte por el resultset y que se actualice la posicion.
-                        ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-
-                //creo la consulta
-                String sql = "SELECT * from usuario WHERE usuario = '" + user
-                        + "' AND pass = '" + pwd + "'";
-
-                //ejecuto la consulta
                 ResultSet rs = instruccion.executeQuery(sql);
 
-                if (rs.next()) {  // si hay un registro.  rs.absolut(1)-->indica la fila.. la 1 es la primera.  
-                    Object[] registro = new Object[2];  //creo un objeto array de 2  para guardar el usuario y si es admin.
-                    registro[0] = rs.getString(1); //columna 1.. nombre usuario
-                    registro[1] = rs.getInt(3); //columna 3.. admin o no
-
-                    //modifico la sesion y le asigno el nombre de atributo login,  el valor, es lo que hay en el registro.(nomUsuario y admin)
-                    my_session.setAttribute("login", registro);
+                if (rs.next()) {
+                    Object[] usuario = new Object[2];
+                    usuario[0] = rs.getString(1);
+                    usuario[1] = rs.getInt(3);
+              
+                    //añado atributo a la sesión. con los datos del usuario
+                    my_session.setAttribute("login", usuario);
                     
-                    //cierro el resultset, las conexiones, etc.
+                    //cierro las conexiones antes de salir.
                     rs.close();
                     instruccion.close();
                     conn.close();
-
-                    //Accedo al foro.
+                    
+                    //redirijo a foro
                     request.getRequestDispatcher("foro.jsp").forward(request, response);
                 }
 

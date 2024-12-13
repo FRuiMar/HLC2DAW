@@ -7,8 +7,8 @@
 <!-- the Compile on Save feature is turned off for the project. -->
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
-<project name="WA_CRUD_Foro_Sesiones" default="default" basedir=".">
-    <description>Builds, tests, and runs the project WA_CRUD_Foro_Sesiones.</description>
+<project name="WebApp_Foro_Sesion" default="default" basedir=".">
+    <description>Builds, tests, and runs the project WebApp_Foro_Sesion.</description>
     <import file="nbproject/build-impl.xml"/>
     <!--
 

@@ -11,16 +11,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import clases.ConnMysql;
+
 import jakarta.servlet.http.HttpSession;
-import java.sql.*;
 
 /**
  *
- * @author Usuario
+ * @author Fran Ruiz
  */
-@WebServlet(name = "s1", urlPatterns = {"/s1"})
-public class s1 extends HttpServlet {
+@WebServlet(name = "s3", urlPatterns = {"/s3"})
+public class s3 extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,45 +35,17 @@ public class s1 extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+           
             
             HttpSession my_session = request.getSession();
             
-            if (my_session.getAttribute("login") != null) {
-                request.getRequestDispatcher("foro.jsp").forward(request, response);
+            //cierro sesion login y redirijo al index.
+            if (request.getParameter("logout") != null) {
+                my_session.removeAttribute("login");
+                request.getRequestDispatcher("index.jsp").forward(request, response);
             }
             
-            String user = (String) request.getParameter("user");
-            String pwd = (String) request.getParameter("pwd");
-
-            try {
-
-                Connection conn = new ConnMysql().getConnection();
-
-                Statement instruccion = conn.createStatement(
-                        ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                
-                String sql = "SELECT * from usuario WHERE usuario = '" + user 
-                        + "' AND pass = '" + pwd + "'";
-                
-                ResultSet rs = instruccion.executeQuery(sql);
-                
-                if (rs.next()) {
-                    Object[] registro = new Object[2];
-                    registro[0] = rs.getString(1);
-                    registro[1] = rs.getInt(3);
-                    
-                    my_session.setAttribute("login", registro);
-                    request.getRequestDispatcher("foro.jsp").forward(request, response);
-                }
-                
-                rs.close();
-                instruccion.close();
-                conn.close();
-                
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
+            
         }
     }
 

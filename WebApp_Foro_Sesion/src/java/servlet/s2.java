@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpSession;
 
 /**
  *
- * @author Usuario
+ * @author Fran Ruiz
  */
 @WebServlet(name = "s2", urlPatterns = {"/s2"})
 public class s2 extends HttpServlet {
@@ -42,11 +42,6 @@ public class s2 extends HttpServlet {
             // Obtenemos el nombre (PK) del usuario logueado.
             Object[] registro = (Object[]) my_session.getAttribute("login");
             String autor = (String) registro[0];
-
-            if (request.getParameter("logout") != null) {
-                my_session.removeAttribute("login");
-                request.getRequestDispatcher("index.jsp").forward(request, response);
-            }
             
             if (request.getParameter("cancel") != null) {
                 request.getRequestDispatcher("foro.jsp").forward(request, response);
@@ -56,54 +51,53 @@ public class s2 extends HttpServlet {
                 // Obtenemos el id del registro seleccionado.
                 int id_registro = Integer.parseInt(request.getParameter("borrar"));
 
-                try {
-                    
+                try {      
                     Connection conn = new ConnMysql().getConnection();
-                    
-                    Statement instruccion = conn.createStatement(
-                            ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                    Statement instruccion = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
                     
                     String sql = "SELECT * FROM mensaje WHERE id = " + id_registro;
                     ResultSet rs = instruccion.executeQuery(sql);
                     
+                    //borrar con absolute que para eso usamos el type_scroll, etc..
                     rs.absolute(1);
                     rs.deleteRow();
                     
+                    //cierro conexsiones.
                     rs.close();
                     instruccion.close();
                     conn.close();
                     
-                    my_session.removeAttribute("msg2");
                     request.getRequestDispatcher("foro.jsp").forward(request, response);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             } else if (request.getParameter("insertar") != null) {
-                // Obtenemos los parámetros introducidos
+                // Guardo el mensaje introducido en insertar nuevo mensaje.
                 String mensaje = request.getParameter("mensaje");
 
                 try {
                     
                     Connection conn = new ConnMysql().getConnection();
-                    
-                    Statement instruccion = conn.createStatement(
-                            ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                    Statement instruccion = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
                     
                     String sql = "SELECT * FROM mensaje";
                     ResultSet rs = instruccion.executeQuery(sql);
                     
-                    rs.moveToInsertRow();
+                    rs.moveToInsertRow(); //nos vamos directamente a la última.
                     
+                    //actualiza el string que vamos a meter en cada posición que quiero modificar.
                     rs.updateString(2, autor);
                     rs.updateString(3, mensaje);
                     
+                    //inserto la fila.
                     rs.insertRow();
                     
+                    //cierro las conexiones.
                     rs.close();
                     instruccion.close();
                     conn.close();
                     
-                    my_session.removeAttribute("msg2");
+                    // y me voy para el foro.
                     request.getRequestDispatcher("foro.jsp").forward(request, response);
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -115,9 +109,7 @@ public class s2 extends HttpServlet {
                 try {
                     
                     Connection conn = new ConnMysql().getConnection();
-                    
-                    Statement instruccion = conn.createStatement(
-                            ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                    Statement instruccion = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
                     
                     String sql = "SELECT * FROM mensaje WHERE id = " + id_registro;
                     ResultSet rs = instruccion.executeQuery(sql);
@@ -126,9 +118,12 @@ public class s2 extends HttpServlet {
                         rs.updateRow();
                     }
                     
+                    //cierro
                     rs.close();
                     instruccion.close();
                     conn.close();
+                    
+                    //redirigo al foro.
                     
                     request.getRequestDispatcher("foro.jsp").forward(request, response);
                 } catch (SQLException e) {

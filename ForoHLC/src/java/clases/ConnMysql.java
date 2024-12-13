@@ -24,7 +24,7 @@ public class ConnMysql {
     // Constructor
     public ConnMysql(){
  
- String url = "jdbc:mysql://localhost:3306/forohlc?autoReconnect=true&useSSL=false";
+ String url = "jdbc:mysql://localhost:3306/forohlc2?autoReconnect=true&useSSL=false";
  String driver = "com.mysql.jdbc.Driver";
  String usuario = "dwes";
  String password = "abc123.";
